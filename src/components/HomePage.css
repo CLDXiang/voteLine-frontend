@@ -1,0 +1,41 @@
+.HomePage {
+    display: flex;
+    display: -webkit-flex;
+    flex: 1;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Main {
+    display: flex;
+    display: -webkit-flex;
+    width: 1000px;
+    align-items: flex-start;
+    /* border-radius: 2px; */
+  }
+
+.Sider {
+    margin: 10px 20px 20px 0;
+    padding: 20px;
+    border: 1px #ddd;
+    border-radius: 2px;
+    -webkit-box-shadow: 0px 0px 5px rgb(190, 190, 190);
+    box-shadow: 0px 0px 5px rgb(190, 190, 190);
+}
+
+.Content {
+    margin: 10px 0 20px 0;
+    padding: 20px;
+    border: 1px #ddd;
+    border-radius: 2px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 5px rgb(190, 190, 190);
+    box-shadow: 0px 0px 5px rgb(190, 190, 190);
+    height: 95%;
+}
+
+
+:global .ant-menu {
+    border-bottom: 0;
+    border-right: 0;
+}

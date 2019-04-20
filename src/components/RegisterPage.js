@@ -57,23 +57,24 @@ class RegistrationForm extends React.Component {
                         return res.json();
                     }).then((data) => {
                         console.log(data);
-                        if (data['res'] === 'success') {
+                        if (data['success'] === true) {
                             // this.props.handleChangeOutput(data['log'], data['file_path'], data['img_path']);
                             message.success('注册成功！马上登录吧！');
                             this.setState({
                                 success: true,
-                            })
-
-                        } else if (data['res'] === 'no_main') {
-                            // this.no_main_warning();
-
+                            });
+                            this.props.handleWaiting(); // 结束运行
+                            this.props.handleRegisterRedirect();
                         } else {
-                            // this.props.handleChangeOutput('程序运行失败', '输出文件储存路径：', '输出图像储存路径：');
-                            // this.error();
-                            message.error('注册失败...');
+                            if (data['existingEmail'] === true && data['existingNickname'] === true) {
+                                message.error('注册失败，邮箱和昵称均已被注册！');
+                            } else if (data['existingEmail'] === true) {
+                                message.error('注册失败，邮箱已被注册！');
+                            } else {
+                                message.error('注册失败，昵称已被注册！');
+                            }
+                            this.props.handleWaiting(); // 结束运行
                         }
-                        this.props.handleWaiting(); // 结束运行
-                        this.props.handleRegisterRedirect();
                     }).catch(() => {
                         this.error();
                         this.props.handleWaiting();

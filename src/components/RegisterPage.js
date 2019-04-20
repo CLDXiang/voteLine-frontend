@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Link, Route, BrowserRouter, Switch, withRouter } from 'react-router-dom';
-import { Layout, Form, Icon, Input, Checkbox, Typography, message, Tabs, Tooltip, Cascader, Select, Row, Col, Button, AutoComplete, Modal } from 'antd';
+import { Layout, Form, Icon, Input, Checkbox, Typography, message, Tabs, Tooltip, Cascader, Select, Row, Col, Spin, Button, AutoComplete, Modal } from 'antd';
 import './RegisterPage.css';
 import HeadBar from './HeadBar';
+import { config } from '../config';
+
+const port_back = config.port_back;
 
 const { Content, Sider } = Layout;
 const { Title, Paragraph, Text } = Typography;
@@ -18,6 +21,7 @@ class RegistrationForm extends React.Component {
     state = {
         confirmDirty: false,
         autoCompleteResult: [],
+        success: false,
     };
 
     handleSubmit = (e) => {
@@ -25,10 +29,60 @@ class RegistrationForm extends React.Component {
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                // TODO 这里处理注册
 
-                message.success('注册成功！马上登录吧！');
-                this.props.handleRegisterRedirect();
+                // 判断条件是否满足
+                if (values.password !== values.confirm) {
+                    message.error('两次输入的密码不一样！');
+                    return false;
+                } else if (values.agreement === false) {
+                    message.error('请阅读并同意用户协议！');
+                } else {
+                    // TODO 这里处理注册
+                    this.props.handleWaiting();
+
+                    const postData = {
+                        email: values.email,
+                        password: values.password,
+                        nickname: values.nickname,
+                    }
+
+                    fetch('http://localhost:3001/api/register', {
+                        method: 'POST',
+                        body: JSON.stringify(postData),
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            // 'Access-Control-Allow-Origin': 'http://localhost:5000'
+                        },
+                    }).then((res) => {
+                        console.log(res);
+                        return res.json();
+                    }).then((data) => {
+                        console.log(data);
+                        if (data['res'] === 'success') {
+                            // this.props.handleChangeOutput(data['log'], data['file_path'], data['img_path']);
+                            message.success('注册成功！马上登录吧！');
+                            this.setState({
+                                success: true,
+                            })
+                            
+                        } else if (data['res'] === 'no_main') {
+                            // this.no_main_warning();
+                            
+                        } else {
+                            // this.props.handleChangeOutput('程序运行失败', '输出文件储存路径：', '输出图像储存路径：');
+                            // this.error();
+                            message.error('注册失败...');
+                        }
+                        this.props.handleWaiting(); // 结束运行
+                        this.props.handleRegisterRedirect();
+                    }).catch(() => {
+                        this.error();
+                        this.props.handleWaiting();
+                    });
+                }
+
+
             }
         });
     }
@@ -187,6 +241,7 @@ class RegisterBar extends Component {
         super();
         this.state = {
             showAgreement: false,
+            waiting: false,
         };
     }
 
@@ -208,26 +263,35 @@ class RegisterBar extends Component {
         });
     }
 
+    handleWaiting = () => {
+        this.setState({
+            waiting: !this.state.waiting,
+        });
+    }
+
     render() {
         return (
             <Content className="RegisterContent" >
-                <WrappedRegistrationForm showAgreement={this.showAgreementModal} handleRegisterRedirect={this.props.handleRegisterRedirect} />
-                <Modal
-                    title="用户条款"
-                    visible={this.state.showAgreement}
-                    onOk={this.handleOk}
-                    onCancel={this.handleCancel}
-                >
-                    <Typography>
-                        <Paragraph>
-                            这只是一个DEMO。
+                <Spin spinning={this.state.waiting} className='spin' size='large' tip='稍等一会儿哦~'>
+                    <WrappedRegistrationForm showAgreement={this.showAgreementModal} handleRegisterRedirect={this.props.handleRegisterRedirect} handleWaiting={this.handleWaiting} />
+                    <Modal
+                        title="用户条款"
+                        visible={this.state.showAgreement}
+                        onOk={this.handleOk}
+                        onCancel={this.handleCancel}
+                    >
+                        <Typography>
+                            <Paragraph>
+                                这只是一个DEMO。
                     </Paragraph>
-                        <Paragraph>
-                            <Text strong>Just happy hacking!</Text>
-                        </Paragraph>
-                    </Typography>
-                </Modal>
+                            <Paragraph>
+                                <Text strong>Just happy hacking!</Text>
+                            </Paragraph>
+                        </Typography>
+                    </Modal>
+                </Spin>
             </Content>
+
         );
     }
 }

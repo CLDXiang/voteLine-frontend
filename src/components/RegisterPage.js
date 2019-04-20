@@ -3,9 +3,7 @@ import { Link, Route, BrowserRouter, Switch, withRouter } from 'react-router-dom
 import { Layout, Form, Icon, Input, Checkbox, Typography, message, Tabs, Tooltip, Cascader, Select, Row, Col, Spin, Button, AutoComplete, Modal } from 'antd';
 import './RegisterPage.css';
 import HeadBar from './HeadBar';
-import { config } from '../config';
-
-const port_back = config.port_back;
+import encodePassword from '../tools/encodePassword';
 
 const { Content, Sider } = Layout;
 const { Title, Paragraph, Text } = Typography;
@@ -42,7 +40,7 @@ class RegistrationForm extends React.Component {
 
                     const postData = {
                         email: values.email,
-                        password: values.password,
+                        password: encodePassword(values.password),
                         nickname: values.nickname,
                     }
 
@@ -65,10 +63,10 @@ class RegistrationForm extends React.Component {
                             this.setState({
                                 success: true,
                             })
-                            
+
                         } else if (data['res'] === 'no_main') {
                             // this.no_main_warning();
-                            
+
                         } else {
                             // this.props.handleChangeOutput('程序运行失败', '输出文件储存路径：', '输出图像储存路径：');
                             // this.error();

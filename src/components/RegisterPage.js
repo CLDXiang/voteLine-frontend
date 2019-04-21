@@ -224,6 +224,7 @@ class RegistrationForm extends React.Component {
                 </Form.Item>
                 <Form.Item {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">注&nbsp;&nbsp;册&nbsp;&nbsp;用&nbsp;&nbsp;户</Button>
+                    <div>已有账号？点<Link to='/login'>这里</Link>登录</div>
                 </Form.Item>
             </Form>
         );

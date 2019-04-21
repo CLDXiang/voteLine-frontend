@@ -19,8 +19,19 @@ class HeadBar extends Component {
     };
   }
 
+  handleLogout = () => {
+    window.sessionStorage.removeItem('nickname');
+    window.sessionStorage.removeItem('userType');
+    this.setState({
+      nickname: null,
+      userType: 'visitor',
+    });
+  }
+
   render() {
     const { userType, nickname } = this.state;
+
+
 
     return (
       <Header className="Header">
@@ -42,10 +53,7 @@ class HeadBar extends Component {
           <Menu mode="horizontal" selectable={false}>
             {((userType === 'normal' || userType === 'root')
               && <SubMenu key="user" style={{ borderBottom: "0" }} title={<span><Icon type="user" /> {(this.state.userType === 'root' && "管理员") || (this.state.userType === 'normal' && "普通会员")} {this.state.nickname || ''}</span>}>
-                <Menu.Item key="setting:1">Option 1</Menu.Item>
-                <Menu.Item key="setting:2">Option 2</Menu.Item>
-                <Menu.Item key="setting:3">Option 3</Menu.Item>
-                <Menu.Item key="setting:4">Option 4</Menu.Item>
+                <Menu.Item key="logout" onClick={this.handleLogout}>退出</Menu.Item>
               </SubMenu>)
               || <Menu.Item key="user" style={{ borderBottom: "0" }}><Link to='/login'><Icon type="user" /> {"点这里登录哦！"}</Link></Menu.Item>}
           </Menu>

@@ -4,48 +4,55 @@ import { Layout, Input, Menu, Icon } from 'antd';
 import './HeadBar.css';
 import logoImg from '../assets/logo.png';
 
+const { SubMenu } = Menu;
 const { Header } = Layout;
 const Search = Input.Search;
 
 
 
 class HeadBar extends Component {
-    constructor() {
-        super();
-        this.state = {
-            nickname: window.sessionStorage.getItem('nickname') || null,
-            userType: window.sessionStorage.getItem('userType') || 'visitor',
-        };
-    }
-
-    render() {
-      return (
-        <Header className="Header">
-          <div className="Logo"><img src={logoImg} alt="" /></div>
-          <div className="Navigation">
-            <Menu mode="horizontal" selectable={false}>
-              <Menu.Item key="home" style={{ borderBottom: "0" }}>
-                <Link to='/'><Icon type="home" /> 首页</Link>
-              </Menu.Item>
-            </Menu>
-          </div>
-          <div className="SearchBar">
-            <Search
-              placeholder="搜索想要的内容"
-              onSearch={value => console.log(value)}
-            />
-          </div>
-          <div className="UserInfo">
-            <Menu mode="horizontal">
-              <Menu.Item key="user" style={{ borderBottom: "0" }}>
-                <Link to='/login'><Icon type="user" /> {(this.state.userType==='root' && "管理员")|| (this.state.userType==='normal' && "普通会员") || '游客'} {this.state.nickname || ''}</Link>
-              </Menu.Item>
-            </Menu>
-          </div>
-        </Header>
-      );
-    }
+  constructor() {
+    super();
+    this.state = {
+      nickname: window.sessionStorage.getItem('nickname') || null,
+      userType: window.sessionStorage.getItem('userType') || 'visitor',
+    };
   }
 
-  export default HeadBar;
-  
+  render() {
+    const { userType, nickname } = this.state;
+
+    return (
+      <Header className="Header">
+        <div className="Logo"><img src={logoImg} alt="" /></div>
+        <div className="Navigation">
+          <Menu mode="horizontal" selectable={false}>
+            <Menu.Item key="home" style={{ borderBottom: "0" }}>
+              <Link to='/'><Icon type="home" /> 首页</Link>
+            </Menu.Item>
+          </Menu>
+        </div>
+        <div className="SearchBar">
+          <Search
+            placeholder="搜索想要的内容"
+            onSearch={value => console.log(value)}
+          />
+        </div>
+        <div className="UserInfo">
+          <Menu mode="horizontal" selectable={false}>
+            {((userType === 'normal' || userType === 'root')
+              && <SubMenu key="user" style={{ borderBottom: "0" }} title={<span><Icon type="user" /> {(this.state.userType === 'root' && "管理员") || (this.state.userType === 'normal' && "普通会员")} {this.state.nickname || ''}</span>}>
+                <Menu.Item key="setting:1">Option 1</Menu.Item>
+                <Menu.Item key="setting:2">Option 2</Menu.Item>
+                <Menu.Item key="setting:3">Option 3</Menu.Item>
+                <Menu.Item key="setting:4">Option 4</Menu.Item>
+              </SubMenu>)
+              || <Menu.Item key="user" style={{ borderBottom: "0" }}><Link to='/login'><Icon type="user" /> {"点这里登录哦！"}</Link></Menu.Item>}
+          </Menu>
+        </div>
+      </Header>
+    );
+  }
+}
+
+export default HeadBar;

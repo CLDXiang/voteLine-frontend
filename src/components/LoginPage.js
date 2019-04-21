@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link, Route, BrowserRouter, Switch, withRouter } from 'react-router-dom';
-import { Layout, Form, Icon, Input, Button, Checkbox, Typography, Tabs, message } from 'antd';
+import { Layout, Form, Icon, Input, Button, Checkbox, Typography, Tabs, message, Spin } from 'antd';
 import './LoginPage.css';
 import HeadBar from './HeadBar';
+import encodePassword from '../tools/encodePassword';
 
 const { Content, Sider } = Layout;
 const { Title } = Typography;
@@ -13,6 +14,10 @@ message.config({
 });
 
 class NormalLoginForm extends React.Component {
+  state = {
+    success: true,
+  }
+
   handleSubmit = (e) => {
     console.log('click!');
     e.preventDefault();
@@ -20,11 +25,51 @@ class NormalLoginForm extends React.Component {
       if (!err) {
         console.log('Received values of form: ', values);
         // TODO 这里得到用户输入的密码，交给后端验证后登录
-        // 假设成功登录，试试webstorage
-        window.sessionStorage.setItem('userName',values.userName);
-        window.sessionStorage.setItem('userType', 'root');
-        this.props.handlelogin();
-        message.success("登录成功，欢迎你！"+values.userName);
+        this.props.handleWaiting();
+
+        const postData = {
+          email: values.email,
+          password: encodePassword(values.password),
+        }
+
+        fetch('http://localhost:3001/api/login', {
+          method: 'POST',
+          body: JSON.stringify(postData),
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        }).then((res) => {
+          console.log(res);
+          return res.json();
+        }).then((data) => {
+          console.log(data);
+          if (data['success'] === true) {
+            message.success('登录成功，欢迎回来！' + data['nickname']);
+            this.setState({
+              success: true,
+            });
+            window.sessionStorage.setItem('nickname', data['nickname']);
+            window.sessionStorage.setItem('userType', data['userType']);
+            console.log('finish');
+            this.props.handleWaiting(); // 结束运行
+            console.log('finish2');
+            this.props.handleLoginRedirect();
+            console.log('finish3');
+
+          } else {
+            if (data['wrongEmail'] === true) {
+              message.error('登录失败，邮箱未注册！');
+            } else if (data['wrongPwd'] === true) {
+              message.error('登录失败，密码错误！');
+            }
+            this.props.handleWaiting(); // 结束运行
+          }
+        }).catch(() => {
+          console.log('error!');
+          this.props.handleWaiting();
+        });
+
       }
     });
   }
@@ -34,15 +79,19 @@ class NormalLoginForm extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <Form.Item>
-          {getFieldDecorator('userName', {
-            rules: [{ required: true, message: '把你用户名给我交咯！' }],
+          {getFieldDecorator('email', {
+            rules: [{
+              type: 'email', message: '邮箱格式不对噢！',
+            }, {
+              required: true, message: '不可以是空的邮箱地址！',
+            }],
           })(
-            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="用户名" />
+            <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="电子邮箱" />
           )}
         </Form.Item>
         <Form.Item>
           {getFieldDecorator('password', {
-            rules: [{ required: true, message: '空密码是认真的吗？' }],
+            rules: [{ required: true, message: '把你密码给我交咯！' }],
           })(
             <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" />
           )}
@@ -68,17 +117,33 @@ class NormalLoginForm extends React.Component {
 const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(NormalLoginForm);
 
 class LoginBar extends Component {
+  constructor() {
+    super();
+    this.state = {
+      waiting: false,
+    }
+  }
+
+  handleWaiting = () => {
+    this.setState({
+      waiting: !this.state.waiting,
+    });
+  }
+
+
   render() {
     return (
       <Content className="LoginContent">
-        <WrappedNormalLoginForm handlelogin={this.props.handlelogin}/>
+        <Spin spinning={this.state.waiting} className='spin' size='large' tip='登录中，稍等一会儿哦~'>
+          <WrappedNormalLoginForm handleLoginRedirect={this.props.handleLoginRedirect} handleWaiting={this.handleWaiting} />
+        </Spin>
       </Content>
     );
   }
 }
 
 class LoginPage extends Component {
-  handleLogin = ()=>{
+  handleLoginRedirect = () => {
     this.props.history.push('/');
   }
 
@@ -87,7 +152,7 @@ class LoginPage extends Component {
       <Layout className="LoginPage">
         <HeadBar />
         <Layout className="LoginMain">
-          <LoginBar handlelogin={this.handleLogin}/>
+          <LoginBar handleLoginRedirect={this.handleLoginRedirect} />
         </Layout>
       </Layout>
     );

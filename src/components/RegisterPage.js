@@ -32,7 +32,7 @@ class RegistrationForm extends React.Component {
                 if (values.password !== values.confirm) {
                     message.error('两次输入的密码不一样！');
                     return false;
-                } else if (values.agreement === false) {
+                } else if (values.agreement !== true) {
                     message.error('请阅读并同意用户协议！');
                 } else {
                     // TODO 这里处理注册
@@ -50,7 +50,6 @@ class RegistrationForm extends React.Component {
                         headers: {
                             'Accept': 'application/json',
                             'Content-Type': 'application/json',
-                            // 'Access-Control-Allow-Origin': 'http://localhost:5000'
                         },
                     }).then((res) => {
                         console.log(res);
@@ -58,7 +57,6 @@ class RegistrationForm extends React.Component {
                     }).then((data) => {
                         console.log(data);
                         if (data['success'] === true) {
-                            // this.props.handleChangeOutput(data['log'], data['file_path'], data['img_path']);
                             message.success('注册成功！马上登录吧！');
                             this.setState({
                                 success: true,
@@ -76,7 +74,7 @@ class RegistrationForm extends React.Component {
                             this.props.handleWaiting(); // 结束运行
                         }
                     }).catch(() => {
-                        this.error();
+                        console.log('error!');
                         this.props.handleWaiting();
                     });
                 }
@@ -271,7 +269,7 @@ class RegisterBar extends Component {
     render() {
         return (
             <Content className="RegisterContent" >
-                <Spin spinning={this.state.waiting} className='spin' size='large' tip='稍等一会儿哦~'>
+                <Spin spinning={this.state.waiting} className='spin' size='large' tip='注册中，稍等一会儿哦~'>
                     <WrappedRegistrationForm showAgreement={this.showAgreementModal} handleRegisterRedirect={this.props.handleRegisterRedirect} handleWaiting={this.handleWaiting} />
                     <Modal
                         title="用户条款"

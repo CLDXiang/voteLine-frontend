@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { Link, Route, BrowserRouter, Switch, withRouter } from 'react-router-dom';
-import { Layout, Form, Icon, Input, Button, Checkbox, Typography, Tabs, message, Spin } from 'antd';
+import { Link, withRouter } from 'react-router-dom';
+import { Layout, Form, Icon, Input, Button, Checkbox, message, Spin, PageHeader } from 'antd';
 import './LoginPage.css';
 import HeadBar from './HeadBar';
 import encodePassword from '../tools/encodePassword';
 
-const { Content, Sider } = Layout;
-const { Title } = Typography;
-const TabPane = Tabs.TabPane;
+const { Content } = Layout;
 
 message.config({
   top: 96,
@@ -51,11 +49,9 @@ class NormalLoginForm extends React.Component {
             });
             window.sessionStorage.setItem('nickname', data['nickname']);
             window.sessionStorage.setItem('userType', data['userType']);
-            console.log('finish');
+            window.sessionStorage.setItem('uid',data['uid']);
             this.props.handleWaiting(); // 结束运行
-            console.log('finish2');
             this.props.handleLoginRedirect();
-            console.log('finish3');
 
           } else {
             if (data['wrongEmail'] === true) {
@@ -78,6 +74,11 @@ class NormalLoginForm extends React.Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
+        <PageHeader
+          onBack={this.props.handleLoginRedirect}
+          title="登录"
+          subTitle="欢迎回来~"
+        />
         <Form.Item>
           {getFieldDecorator('email', {
             rules: [{
@@ -135,6 +136,7 @@ class LoginBar extends Component {
     return (
       <Content className="LoginContent">
         <Spin spinning={this.state.waiting} className='spin' size='large' tip='登录中，稍等一会儿哦~'>
+
           <WrappedNormalLoginForm handleLoginRedirect={this.props.handleLoginRedirect} handleWaiting={this.handleWaiting} />
         </Spin>
       </Content>

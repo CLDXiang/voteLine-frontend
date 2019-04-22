@@ -1,0 +1,54 @@
+.NewInvPage {
+    display: flex;
+    display: -webkit-flex;
+    flex: 1;
+    align-items: center;
+    flex-direction: column;
+    background: transparent;
+}
+
+.NewInvMain {
+    display: flex;
+    display: -webkit-flex;
+    width: 80%;
+    align-items: center;
+    background: transparent;
+    /* border-radius: 2px; */
+}
+
+.NewInvContent {
+    display: flex;
+    display: -webkit-flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 10px 0 20px 0;
+    padding: 20px;
+    border: 1px #ddd;
+    border-radius: 2px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 5px rgb(190, 190, 190);
+    box-shadow: 0px 0px 5px rgb(190, 190, 190);
+    width: 95%;
+    opacity: 0.95;
+    overflow-y: auto;
+}
+
+.newinv-form {
+    width: 800px;
+}
+
+.dynamic-delete-button {
+    cursor: pointer;
+    position: relative;
+    top: 4px;
+    font-size: 24px;
+    color: #999;
+    transition: all .3s;
+  }
+  .dynamic-delete-button:hover {
+    color: #777;
+  }
+  .dynamic-delete-button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }

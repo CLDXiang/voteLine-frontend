@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Route, BrowserRouter, Switch, withRouter } from 'react-router-dom';
-import { Layout, Form, Icon, Input, Checkbox, Typography, message, Tabs, Tooltip, Cascader, Select, Row, Col, Spin, Button, AutoComplete, Modal } from 'antd';
+import { Layout, Form, Icon, Input, Checkbox, Typography, message, Tabs, Tooltip, Cascader, Select, Row, Col, Spin, Button, AutoComplete, Modal, PageHeader } from 'antd';
 import './RegisterPage.css';
 import HeadBar from './HeadBar';
 import encodePassword from '../tools/encodePassword';
@@ -31,7 +31,6 @@ class RegistrationForm extends React.Component {
                 // 判断条件是否满足
                 if (values.password !== values.confirm) {
                     message.error('两次输入的密码不一样！');
-                    return false;
                 } else if (values.agreement !== true) {
                     message.error('请阅读并同意用户协议！');
                 } else {
@@ -106,16 +105,6 @@ class RegistrationForm extends React.Component {
         callback();
     }
 
-    handleWebsiteChange = (value) => {
-        let autoCompleteResult;
-        if (!value) {
-            autoCompleteResult = [];
-        } else {
-            autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
-        }
-        this.setState({ autoCompleteResult });
-    }
-
     render() {
         const { getFieldDecorator } = this.props.form;
 
@@ -144,6 +133,11 @@ class RegistrationForm extends React.Component {
 
         return (
             <Form {...formItemLayout} onSubmit={this.handleSubmit} className="register-form">
+                <PageHeader
+                    onBack={this.props.handleRegisterRedirect}
+                    title="注册账号"
+                    subTitle="开始你的VoteLine之旅吧~"
+                />
                 <Form.Item
                     label={(
                         <span>

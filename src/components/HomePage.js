@@ -14,13 +14,12 @@ class ContentBar extends Component {
   render() {
     return (
       <Content className="Content">
-        <Title level={4} style={{ color: "orange" }}><Icon type="fire" theme="twoTone" twoToneColor="red" /> 热门投票</Title>
+        <Title level={4} style={{ color: "orange" }}><Icon type="clock-circle" theme="twoTone" twoToneColor="orange" /> 最新投票</Title>
         <Tabs defaultActiveKey="1" onChange={() => { }} style={{ flex: 1 }}>
-
-          <TabPane tab={<span><Icon type="weibo" />热点讨论</span>} key="1"><VoteList /></TabPane>
-          <TabPane tab={<span><Icon type="pie-chart" />问卷调查</span>} key="2">问卷调查</TabPane>
-          <TabPane tab={<span><Icon type="team" />活动投票</span>} key="3">活动投票</TabPane>
-          <TabPane tab={<span><Icon type="profile" />杂七杂八</span>} key="4">杂七杂八</TabPane>
+          <TabPane tab={<span><Icon type="weibo" />热点讨论</span>} key="1"><VoteList itype="discuss" /></TabPane>
+          <TabPane tab={<span><Icon type="pie-chart" />问卷调查</span>} key="2"><VoteList itype="question" /></TabPane>
+          <TabPane tab={<span><Icon type="team" />活动投票</span>} key="3"><VoteList itype="activity" /></TabPane>
+          <TabPane tab={<span><Icon type="profile" />杂七杂八</span>} key="4"><VoteList itype="others" /></TabPane>
         </Tabs>
       </Content>
     );

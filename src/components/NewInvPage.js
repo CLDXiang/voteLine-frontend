@@ -57,12 +57,15 @@ class NewInvForm extends React.Component {
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 // console.log('Received values of form: ', values);
+                const valid_options = values.options.filter(item=>item);
+                // console.log(valid_options);
+                // console.log(valid_options.length);
 
-                if (!values.options.length || values.options.length < 2) {
+                if (!valid_options || valid_options.length < 2) {
                     // 没有选项
                     message.error('至少需要两个选项！');
                 } else {
-                    // TODO 这里处理后端
+                    // TODO: 这里处理后端
                     this.props.handleWaiting();
 
                     const postData = {
@@ -72,7 +75,7 @@ class NewInvForm extends React.Component {
                         multiple: values.multiple,
                         itype: values.itype,
                         createrUid: window.sessionStorage.getItem('uid'),
-                        options: values.options,
+                        options: valid_options,
                     }
 
                     console.log(postData);

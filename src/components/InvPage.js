@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link, Route, BrowserRouter, withRouter } from 'react-router-dom';
 import { Layout, Form, Icon, Input, Switch, Radio, Checkbox, Typography, message, Tabs, Tooltip, DatePicker, Cascader, Select, Row, Col, Spin, Button, AutoComplete, Modal, PageHeader } from 'antd';
+import createG2 from 'g2-react';
+import { Stat } from 'g2';
 import './InvPage.css';
 import HeadBar from './HeadBar';
 import encodePassword from '../tools/encodePassword';
@@ -191,9 +193,6 @@ class InvForm extends React.Component {
                             initialValue: votedOptions[0],
                         })(
                             <Radio.Group>
-                                {/* <Radio style={radioStyle} value="a">item 1</Radio>
-                                <Radio style={radioStyle} value="b">item 2</Radio>
-                                <Radio style={radioStyle} value="c">item 3</Radio> */}
                                 {this.state.data && this.state.data.options.map((option, key) => (
                                     <Row align="middle" justify="center" style={{ margin: "12px 0" }} key={key}>
                                         <Col span={24}><Radio value={option.oid} style={{ fontSize: "15px", lineHeight: "1.6" }} disabled={voted}>选项{key + 1}: {option.content}</Radio></Col>
@@ -219,14 +218,38 @@ class ResultsBar extends Component {
         this.state = {
             success: false,
             data: null,
+            chartData: [],
+            width: 800,
+            height: 500,
+            plotCfg: {
+                margin: [0, 0, 0, 0]
+            },
         };
     }
+
+
 
     componentDidMount() {
         this.fetchData((res) => {
             console.log(res);
+            let maxLength = 0;
+            let chartData = [];
+            let index = 1;
+            for (let option of res.options.reverse()) {
+                maxLength = option.content.length > maxLength ? option.content.length : maxLength;
+                maxLength = maxLength > 15 ? 20 : maxLength; // 不超过15
+                chartData.push({ "option": option.content.length > 15 ? `选项${index}：${option.content.substring(0,15)}...`: `选项${index}：${option.content}`, "num": option.number, "content": `选项${index}：${option.content}` });
+                index++;
+            }
+            console.log(chartData);
+            console.log(maxLength);
             this.setState({
                 data: res,
+                chartData: chartData,
+                height: index*50,
+                plotCfg: {
+                    margin: [0, 30, 0, 15 * maxLength]
+                },
             });
         });
     }
@@ -256,6 +279,31 @@ class ResultsBar extends Component {
     }
 
     render() {
+        const Chart = createG2(chart => {
+            chart.axis('option', {
+                title: '选项'
+            });
+            chart.axis('num', {
+                title: '票数'
+            });
+            
+            chart.coord('rect').transpose();
+            chart.interval().position('option*num').color('option').label('num', {
+                textStyle: {
+                  fill: '#8d8d8d'
+                },
+                offset: 10
+              });
+            chart.legend(false);
+            chart.tooltip({
+                map: { 
+                  title: 'option', 
+                  name: '票数',
+                  value: 'num'
+                }
+              });
+            chart.render();
+        });
         return (
             <Layout className="inv-form" >
                 <Typography >
@@ -274,6 +322,15 @@ class ResultsBar extends Component {
                         {(this.state.data && this.state.data.inv.description) || ''}
                     </Paragraph>
                 </Typography>
+                <Layout className="chart">
+                    <Chart
+                        data={this.state.chartData}
+                        forceFit={true}
+                        width={this.state.width}
+                        height={this.state.height}
+                        plotCfg={this.state.plotCfg}
+                    />
+                </Layout>
             </Layout>
 
         );
@@ -300,16 +357,16 @@ class InvBar extends Component {
     render() {
         const sub_props = {
             changeShow: this.changeShow,
-            iid :this.props.iid,
-            userType:this.props.userType,
-            handleInvRedirect:this.props.handleInvRedirect,
-            handleGoLogin:this.props.handleGoLogin,
+            iid: this.props.iid,
+            userType: this.props.userType,
+            handleInvRedirect: this.props.handleInvRedirect,
+            handleGoLogin: this.props.handleGoLogin,
         }
 
         return (
             <Content className="InvContent" >
-                    {this.state.showResults ? <ResultsBar {...sub_props} /> :
-                        <WrappedInvForm {...sub_props} />}
+                {this.state.showResults ? <ResultsBar {...sub_props} /> :
+                    <WrappedInvForm {...sub_props} />}
             </Content>
 
         );

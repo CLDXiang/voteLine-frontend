@@ -89,6 +89,11 @@
     -webkit-tap-highlight-color: rgba(26, 26, 26, 0);
 }
 
+.chart {
+    flex: 1;
+    background: transparent;
+}
+
 .dynamic-delete-button {
     cursor: pointer;
     position: relative;

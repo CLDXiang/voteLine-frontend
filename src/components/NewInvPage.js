@@ -72,8 +72,8 @@ class NewInvForm extends React.Component {
                         title: values.title,
                         description: values.description || '',
                         timeEnd: Date(values.timeEnd.format('l')),
-                        multiple: values.multiple,
-                        itype: values.itype,
+                        multiple: values.multiple || false,
+                        itype: values.itype || 'others',
                         createrUid: parseInt(window.sessionStorage.getItem('uid')),
                         options: valid_options,
                     }

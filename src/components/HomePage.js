@@ -35,10 +35,10 @@ class SideBar extends Component {
             <Link to='/newinv'><Icon type="form" /> 发起投票</Link>
           </Menu.Item>
           <Menu.Item key="myInv" style={{ borderBottom: "0" }}>
-            <Link to='/'><Icon type="bar-chart" /> 查看我发起的投票</Link>
+            <Link to='/'><Icon type="bar-chart" /> 查看我发起的投票（施工中<Icon type="loading" />）</Link>
           </Menu.Item>
           <Menu.Item key="myVote" style={{ borderBottom: "0" }}>
-            <Link to='/'><Icon type="book" /> 查看我的投票</Link>
+            <Link to='/'><Icon type="book" /> 查看我的投票（施工中<Icon type="loading" />）</Link>
           </Menu.Item>
         </Menu>
       </Sider>

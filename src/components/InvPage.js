@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link, Route, BrowserRouter, withRouter } from 'react-router-dom';
-import { Layout, Form, Icon, Input, Switch, Radio, Checkbox, Typography, message, Tabs, Tooltip, DatePicker, Cascader, Select, Row, Col, Spin, Button, AutoComplete, Modal, PageHeader } from 'antd';
+import { Layout, Form, Icon, Input, Switch, Avatar, Radio, Checkbox, Typography, message, Tabs, Tooltip, DatePicker, Cascader, Select, Row, Col, Spin, Button, AutoComplete, Modal, PageHeader } from 'antd';
 import createG2 from 'g2-react';
 import { Stat } from 'g2';
+import moment from 'moment';
 import './InvPage.css';
 import HeadBar from './HeadBar';
 import encodePassword from '../tools/encodePassword';
@@ -166,9 +167,14 @@ class InvForm extends React.Component {
                             </Button>
                         </Button.Group>
                     </Title>
+                    <Paragraph>
+                        <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf', marginRight: "10px" }}>{this.state.data && this.state.data.createrName.substring(0, 1)}</Avatar> 
+                        <Text>{this.state.data && this.state.data.createrName} 创建于 {this.state.data && moment(this.state.data.inv.createdAt).format('YYYY-MM-DD HH:mm:ss')}</Text>
+                    </Paragraph>
                     <Paragraph className="paragraph">
                         {(this.state.data && this.state.data.inv.description) || ''}
                     </Paragraph>
+                    
                 </Typography>
                 {(this.state.data && this.state.data.inv.multiple === true) ?
                     <Form.Item
@@ -234,21 +240,21 @@ class ResultsBar extends Component {
             console.log(res);
             let maxLength = 0;
             let chartData = [];
-            let index = 1;
+            let index = res.options.length;
             for (let option of res.options.reverse()) {
                 maxLength = option.content.length > maxLength ? option.content.length : maxLength;
                 maxLength = maxLength > 15 ? 20 : maxLength; // 不超过15
-                chartData.push({ "option": option.content.length > 15 ? `选项${index}：${option.content.substring(0,15)}...`: `选项${index}：${option.content}`, "num": option.number, "content": `选项${index}：${option.content}` });
-                index++;
+                chartData.push({ "option": option.content.length > 15 ? `选项${index}：${option.content.substring(0, 15)}...` : `选项${index}：${option.content}`, "num": option.number, "content": `选项${index}：${option.content}` });
+                index--;
             }
             console.log(chartData);
             console.log(maxLength);
             this.setState({
                 data: res,
                 chartData: chartData,
-                height: index*50,
+                height: res.options.length * 50,
                 plotCfg: {
-                    margin: [0, 30, 0, 15 * maxLength]
+                    margin: [0, 30, 0, 18 * (maxLength + 1)]
                 },
             });
         });
@@ -286,22 +292,22 @@ class ResultsBar extends Component {
             chart.axis('num', {
                 title: '票数'
             });
-            
+
             chart.coord('rect').transpose();
             chart.interval().position('option*num').color('option').label('num', {
                 textStyle: {
-                  fill: '#8d8d8d'
+                    fill: '#8d8d8d'
                 },
                 offset: 10
-              });
+            });
             chart.legend(false);
             chart.tooltip({
-                map: { 
-                  title: 'option', 
-                  name: '票数',
-                  value: 'num'
+                map: {
+                    title: 'option',
+                    name: '票数',
+                    value: 'num'
                 }
-              });
+            });
             chart.render();
         });
         return (
@@ -318,6 +324,10 @@ class ResultsBar extends Component {
                             </Button>
                         </Button.Group>
                     </Title>
+                    <Paragraph>
+                        <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf', marginRight: "10px" }}>{this.state.data && this.state.data.createrName.substring(0, 1)}</Avatar> 
+                        <Text>{this.state.data && this.state.data.createrName} 创建于 {this.state.data && moment(this.state.data.inv.createdAt).format('YYYY-MM-DD HH:mm:ss')}</Text>
+                    </Paragraph>
                     <Paragraph className="paragraph">
                         {(this.state.data && this.state.data.inv.description) || ''}
                     </Paragraph>

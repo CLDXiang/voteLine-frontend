@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Layout, Input, Menu, Icon } from 'antd';
+import { Link, withRouter } from 'react-router-dom';
+import { Layout, Input, Menu, Icon, message } from 'antd';
 import './HeadBar.css';
 import logoImg from '../assets/logo.png';
 
@@ -28,10 +28,17 @@ class HeadBar extends Component {
     });
   }
 
+  handleSearch = async (pattern) => {
+    if (!pattern) {
+      message.warning('请输入要搜索的内容噢！');
+    } else {
+      await this.props.history.push('/');
+      await this.props.history.push(`/search/${pattern}`);
+    }
+  }
+
   render() {
     const { userType, nickname } = this.state;
-
-
 
     return (
       <Header className="Header">
@@ -46,13 +53,13 @@ class HeadBar extends Component {
         <div className="SearchBar">
           <Search
             placeholder="搜索想要的内容"
-            onSearch={value => console.log(value)}
+            onSearch={pattern => { this.handleSearch(pattern); }}
           />
         </div>
         <div className="UserInfo">
           <Menu mode="horizontal" selectable={false}>
             {((userType === 'normal' || userType === 'root')
-              && <SubMenu key="user" style={{ borderBottom: "0" }} title={<span><Icon type="user" /> {(this.state.userType === 'root' && "管理员") || (this.state.userType === 'normal' && "普通会员")} {this.state.nickname || ''}</span>}>
+              && <SubMenu key="user" style={{ borderBottom: "0" }} title={<span><Icon type="user" /> {(this.state.userType === 'root' && "管理员") || (this.state.userType === 'normal' && "普通会员")} {nickname || ''}</span>}>
                 <Menu.Item key="logout" onClick={this.handleLogout}>退出</Menu.Item>
               </SubMenu>)
               || <Menu.Item key="user" style={{ borderBottom: "0" }}><Link to='/login'><Icon type="user" /> {"点这里登录哦！"}</Link></Menu.Item>}
@@ -63,4 +70,4 @@ class HeadBar extends Component {
   }
 }
 
-export default HeadBar;
+export default withRouter(HeadBar);

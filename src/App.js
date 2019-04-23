@@ -6,6 +6,8 @@ import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import NewInvPage from './components/NewInvPage';
 import InvPage from './components/InvPage';
+import SearchPage from './components/SearchPage';
+import RedirectPage from './components/RedirectPage';
 import './App.css';
 
 
@@ -21,6 +23,8 @@ class App extends Component {
             <Route path="/register" component={RegisterPage} />
             <Route path="/newinv" component={NewInvPage} />
             <Route path="/inv/:iid" component={InvPage} />
+            <Route path="/search/:pattern" component={SearchPage} />
+            <Route path="/redirect" component={RedirectPage} />
           </Switch>
         </BrowserRouter>
       </div>

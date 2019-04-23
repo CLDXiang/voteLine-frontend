@@ -74,7 +74,7 @@ class NewInvForm extends React.Component {
                         timeEnd: Date(values.timeEnd.format('l')),
                         multiple: values.multiple,
                         itype: values.itype,
-                        createrUid: window.sessionStorage.getItem('uid'),
+                        createrUid: parseInt(window.sessionStorage.getItem('uid')),
                         options: valid_options,
                     }
 

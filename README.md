@@ -4,8 +4,6 @@
 
 voteLine frontend是一个基于[React](https://reactjs.org/)+[AntD](https://ant.design)+[AntV.G2](https://antv.alipay.com)的Web投票应用，目前仅仅实现了一些基础功能，其余功能尚待完善。
 
-![homepage](https://github.com/CLDXiang/IMG/blob/master/voteLine_homepage.jpg)
-
 ## 快速开始
 
 在开始之前，你可能需要安装[yarn](https://github.com/yarnpkg/yarn/)。

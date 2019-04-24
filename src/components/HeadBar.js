@@ -14,7 +14,7 @@ class HeadBar extends Component {
   constructor() {
     super();
     this.state = {
-      nickname: window.sessionStorage.getItem('nickname') || null,
+      nickname: window.sessionStorage.getItem('nickname') || '',
       userType: window.sessionStorage.getItem('userType') || 'visitor',
     };
   }

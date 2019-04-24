@@ -30,9 +30,9 @@ class RegistrationForm extends React.Component {
 
                 // 判断条件是否满足
                 if (values.password !== values.confirm) {
-                    message.error('两次输入的密码不一样！');
+                    message.warning('两次输入的密码不一样！');
                 } else if (values.agreement !== true) {
-                    message.error('请阅读并同意用户协议！');
+                    message.warning('请阅读并同意用户协议！');
                 } else {
                     // 这里处理注册
                     this.props.handleWaiting();

@@ -19,12 +19,14 @@ class HeadBar extends Component {
   }
 
   handleLogout = () => {
+    window.sessionStorage.removeItem('uid');
     window.sessionStorage.removeItem('nickname');
     window.sessionStorage.removeItem('userType');
     this.setState({
       nickname: null,
       userType: 'visitor',
     });
+    this.props.history.push('/');
   };
 
   handleSearch = async (pattern) => {

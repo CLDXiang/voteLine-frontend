@@ -61,7 +61,7 @@ class NewInvForm extends React.Component {
 
                 if (!valid_options || valid_options.length < 2) {
                     // 没有选项
-                    message.error('至少需要两个选项！');
+                    message.warning('至少需要两个选项！');
                 } else {
                     // 这里处理后端
                     this.props.handleWaiting();

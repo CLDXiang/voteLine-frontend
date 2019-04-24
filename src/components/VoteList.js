@@ -102,7 +102,7 @@ class VoteList extends Component {
         const userType = window.sessionStorage.getItem('userType') || 'visitor';
         console.log(uid, userType);
         if (parseInt(uid) !== parseInt(item.createruid) && userType !== 'root') {
-            message.error("只能删除自己创建的投票！");
+            message.warning("只能删除自己创建的投票！");
             return;
         }
 

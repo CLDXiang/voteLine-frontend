@@ -93,8 +93,6 @@ class InvForm extends React.Component {
                 const ip = window.sessionStorage.getItem('ip');
                 const region = window.sessionStorage.getItem('region');
 
-
-                // TODO: 这里处理后端
                 const postData = {
                     options: options,
                     uid: parseInt(uid),

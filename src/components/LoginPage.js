@@ -26,7 +26,7 @@ class NormalLoginForm extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        // TODO: 这里得到用户输入的密码，交给后端验证后登录
+        // 这里得到用户输入的密码，交给后端验证后登录
         this.props.handleWaiting();
 
         const postData = {

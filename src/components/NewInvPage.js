@@ -63,7 +63,7 @@ class NewInvForm extends React.Component {
                     // 没有选项
                     message.error('至少需要两个选项！');
                 } else {
-                    // TODO: 这里处理后端
+                    // 这里处理后端
                     this.props.handleWaiting();
 
                     const postData = {

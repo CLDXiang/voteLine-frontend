@@ -34,7 +34,7 @@ class RegistrationForm extends React.Component {
                 } else if (values.agreement !== true) {
                     message.error('请阅读并同意用户协议！');
                 } else {
-                    // TODO: 这里处理注册
+                    // 这里处理注册
                     this.props.handleWaiting();
 
                     const postData = {

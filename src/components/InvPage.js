@@ -285,7 +285,7 @@ class ResultsBar extends Component {
             this.setState({
                 data: res,
                 chartData: chartData,
-                height: res.options.length * 50,
+                height: res.options.length > 10 ? 500:res.options.length * 50,
                 plotCfg: {
                     margin: [0, 30, 0, 17 * (maxLength + 4)]
                 },

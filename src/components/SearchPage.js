@@ -42,7 +42,7 @@ class ResultsBar extends Component {
             startIndex: this.state.startIndex,
             itype: "",
             "pattern": this.props.pattern,
-            "orderBy": "new",
+            "orderBy": "hot",
         };
 
         console.log(postData);

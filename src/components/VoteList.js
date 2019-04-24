@@ -40,7 +40,7 @@ class VoteList extends Component {
             startIndex: this.state.startIndex,
             itype: this.props.itype,
             "pattern": "",
-            "orderBy": "new",
+            "orderBy": "hot",
         };
 
         console.log(postData);

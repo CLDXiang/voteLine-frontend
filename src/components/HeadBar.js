@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Layout, Input, Menu, Icon, message } from 'antd';
+import { Layout, Input, Menu, Icon, message, Avatar } from 'antd';
 import './HeadBar.css';
 import logoImg from '../assets/logo.png';
 
@@ -60,7 +60,10 @@ class HeadBar extends Component {
         <div className="UserInfo">
           <Menu mode="horizontal" selectable={false}>
             {((userType === 'normal' || userType === 'root')
-              && <SubMenu key="user" style={{ borderBottom: "0" }} title={<span><Icon type="user" /> {(this.state.userType === 'root' && "管理员") || (this.state.userType === 'normal' && "普通会员")} {nickname || ''}</span>}>
+              && <SubMenu key="user" style={{ borderBottom: "0" }} title={<span>
+                <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf', marginRight: "10px" }}>{nickname.substring(0, 1)}</Avatar>
+                {(this.state.userType === 'root' && "管理员") || (this.state.userType === 'normal' && "普通会员")} {nickname || ''}
+              </span>}>
                 <Menu.Item key="logout" onClick={this.handleLogout}>退出</Menu.Item>
               </SubMenu>)
               || <Menu.Item key="user" style={{ borderBottom: "0" }}><Link to='/login'><Icon type="user" /> {"点这里登录哦！"}</Link></Menu.Item>}

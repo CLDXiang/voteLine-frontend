@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Layout, Form, Icon, Avatar, Radio, Checkbox, Typography, message, Row, Col, Button } from 'antd';
+import { Layout, Form, Icon, Avatar, Radio, Checkbox, Typography, message, Row, Col, Button, Popconfirm } from 'antd';
 import createG2 from 'g2-react';
 import moment from 'moment';
 import './InvPage.css';
@@ -132,7 +132,55 @@ class InvForm extends React.Component {
         });
     };
 
+
+    handleDelete = (item) => {
+        // 验证用户身份
+        console.log(item);
+        const uid = window.sessionStorage.getItem('uid') || -1;
+        const userType = window.sessionStorage.getItem('userType') || 'visitor';
+        console.log(uid, userType);
+        if (parseInt(uid) !== parseInt(item.createruid) && userType !== 'root') {
+            message.error("只能删除自己创建的投票！");
+            return;
+        }
+
+        const postData = {
+            iid: item.iid,
+        };
+
+        console.log(postData);
+
+        fetch(`${url_server}/api/deleteinv`, {
+            method: 'POST',
+            body: JSON.stringify(postData),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        }).then((res) => {
+            console.log(res);
+            return res.json();
+        }).then((data) => {
+            console.log(data);
+            if (data['success'] === true) {
+                console.log(data);
+                message.success('删除投票成功！');
+                this.props.handleInvRedirect();
+            }
+        }).catch(() => {
+            console.log('error!');
+        });
+    };
+
     render() {
+        const DeleteIconText = ({ type, text, item }) => (
+            <Popconfirm onConfirm={() => { this.handleDelete(item); }} title="确定要删除吗" icon={<Icon type="question-circle-o" style={{ color: 'orange' }} />}>
+                <span style={{ cursor: "pointer" }}>
+                    <Icon type={type} style={{ marginRight: 8 }} />
+                    {text}
+                </span>
+            </Popconfirm>
+        );
         const { getFieldDecorator } = this.props.form;
         const voted = (this.state.data && this.state.data.voted) || false;
         const votedOptions = (this.state.data && this.state.data.votedOptions) || [];
@@ -153,7 +201,8 @@ class InvForm extends React.Component {
                     </Title>
                     <Paragraph>
                         <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf', marginRight: "10px" }}>{this.state.data && this.state.data.createrName.substring(0, 1)}</Avatar>
-                        <Text>{this.state.data && this.state.data.createrName} 创建于 {this.state.data && moment(this.state.data.inv.createdAt).format('YYYY-MM-DD HH:mm:ss')}</Text>
+                        <Text>{this.state.data && this.state.data.createrName} 创建于 {this.state.data && moment(this.state.data.inv.createdAt).format('YYYY-MM-DD HH:mm:ss')}  </Text>
+                        <DeleteIconText type="delete" text="删除" item={this.state.data && this.state.data.inv} />
                     </Paragraph>
                     <Paragraph className="paragraph">
                         {(this.state.data && this.state.data.inv.description) || ''}
@@ -268,7 +317,55 @@ class ResultsBar extends Component {
         });
     };
 
+
+    handleDelete = (item) => {
+        // 验证用户身份
+        console.log(item);
+        const uid = window.sessionStorage.getItem('uid') || -1;
+        const userType = window.sessionStorage.getItem('userType') || 'visitor';
+        console.log(uid, userType);
+        if (parseInt(uid) !== parseInt(item.createruid) && userType !== 'root') {
+            message.error("只能删除自己创建的投票！");
+            return;
+        }
+
+        const postData = {
+            iid: item.iid,
+        };
+
+        console.log(postData);
+
+        fetch(`${url_server}/api/deleteinv`, {
+            method: 'POST',
+            body: JSON.stringify(postData),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        }).then((res) => {
+            console.log(res);
+            return res.json();
+        }).then((data) => {
+            console.log(data);
+            if (data['success'] === true) {
+                console.log(data);
+                message.success('删除投票成功！');
+                this.props.handleInvRedirect();
+            }
+        }).catch(() => {
+            console.log('error!');
+        });
+    };
+
     render() {
+        const DeleteIconText = ({ type, text, item }) => (
+            <Popconfirm onConfirm={() => { this.handleDelete(item); }} title="确定要删除吗" icon={<Icon type="question-circle-o" style={{ color: 'orange' }} />}>
+                <span style={{ cursor: "pointer" }}>
+                    <Icon type={type} style={{ marginRight: 8 }} />
+                    {text}
+                </span>
+            </Popconfirm>
+        );
         const Chart = createG2(chart => {
             chart.axis('option', {
                 title: '选项'
@@ -310,7 +407,8 @@ class ResultsBar extends Component {
                     </Title>
                     <Paragraph>
                         <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf', marginRight: "10px" }}>{this.state.data && this.state.data.createrName.substring(0, 1)}</Avatar>
-                        <Text>{this.state.data && this.state.data.createrName} 创建于 {this.state.data && moment(this.state.data.inv.createdAt).format('YYYY-MM-DD HH:mm:ss')}</Text>
+                        <Text>{this.state.data && this.state.data.createrName} 创建于 {this.state.data && moment(this.state.data.inv.createdAt).format('YYYY-MM-DD HH:mm:ss')}  </Text>
+                        <DeleteIconText type="delete" text="删除" item={this.state.data && this.state.data.inv} />
                     </Paragraph>
                     <Paragraph className="paragraph">
                         {(this.state.data && this.state.data.inv.description) || ''}

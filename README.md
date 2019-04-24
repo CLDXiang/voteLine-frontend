@@ -1,68 +1,55 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# voteLine frontend
 
-## Available Scripts
+这是一个《数据库引论》课程项目的前端部分。后端部分在[这里](https://github.com/CLDXiang/voteLine-backend)。
 
-In the project directory, you can run:
+voteLine frontend是一个基于[React](https://reactjs.org/)+[AntD](https://ant.design)+[AntV.G2](https://antv.alipay.com)的Web投票应用，目前仅仅实现了一些基础功能，其余功能尚待完善。
 
-### `npm start`
+![homepage](https://github.com/CLDXiang/IMG/blob/master/voteLine_homepage.jpg)
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 快速开始
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+在开始之前，你可能需要安装[yarn](https://github.com/yarnpkg/yarn/)。
 
-### `npm test`
+首先进入你准备存放项目文件的根目录，如`repo`：
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+cd repo
+```
 
-### `npm run build`
+下载项目源码：
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+git clone https://github.com/CLDXiang/voteLine-frontend.git
+cd voteLine-frontend
+```
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+配置：
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+使用VIM或你喜欢的编辑器打开`voteLine-frontend/src/config.js`，修改其中的项目并保存（如果你只是在本地测试，可以直接使用默认配置）：
 
-### `npm run eject`
+* url_back: 后端服务器地址
+* port_back: 后端服务器端口号
+* port_front: 前端端口号
+* salt: 盐（用于密码加密）
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+后端的配置与启动见[voteLine-backend](https://github.com/CLDXiang/voteLine-backend)。
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+开始运行：
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+yarn start
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+稍等片刻便会在浏览器中自动打开Web页面，你也可以手动访问`https://localhost:你的前端端口号`。
 
-## Learn More
+如果希望在生产环境中部署，可以使用
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+yarn build
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+并将生成的文件部署在服务器。
 
-### Code Splitting
+## 外部资源
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+页面背景图片来自[Pixiv](https://www.pixiv.net/member_illust.php?mode=medium&illust_id=62288977)。

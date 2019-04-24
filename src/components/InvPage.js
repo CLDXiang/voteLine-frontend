@@ -266,8 +266,6 @@ class ResultsBar extends Component {
         };
     }
 
-
-
     componentDidMount() {
         this.fetchData((res) => {
             console.log(res);

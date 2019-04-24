@@ -14,7 +14,7 @@ message.config({
 class NormalLoginForm extends React.Component {
   state = {
     success: true,
-  }
+  };
 
   handleSubmit = (e) => {
     console.log('click!');
@@ -49,7 +49,7 @@ class NormalLoginForm extends React.Component {
             });
             window.sessionStorage.setItem('nickname', data['nickname']);
             window.sessionStorage.setItem('userType', data['userType']);
-            window.sessionStorage.setItem('uid',data['uid']);
+            window.sessionStorage.setItem('uid', data['uid']);
             this.props.handleWaiting(); // 结束运行
             this.props.handleLoginRedirect();
 
@@ -68,7 +68,7 @@ class NormalLoginForm extends React.Component {
 
       }
     });
-  }
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -129,7 +129,7 @@ class LoginBar extends Component {
     this.setState({
       waiting: !this.state.waiting,
     });
-  }
+  };
 
 
   render() {
@@ -147,7 +147,7 @@ class LoginBar extends Component {
 class LoginPage extends Component {
   handleLoginRedirect = () => {
     this.props.history.push('/');
-  }
+  };
 
   render() {
     return (

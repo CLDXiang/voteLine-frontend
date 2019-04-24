@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
-import { Link, Route, BrowserRouter, withRouter } from 'react-router-dom';
-import { Layout, Form, Icon, Input, Switch, Radio, Checkbox, Typography, message, Tabs, Tooltip, DatePicker, Cascader, Select, Row, Col, Spin, Button, AutoComplete, Modal, PageHeader } from 'antd';
+import { withRouter } from 'react-router-dom';
+import { Layout, Form, Icon, Input, Switch, Radio, message, DatePicker, Spin, Button, PageHeader } from 'antd';
 import './NewInvPage.css';
 import HeadBar from './HeadBar';
-import encodePassword from '../tools/encodePassword';
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 const { TextArea } = Input;
-const { Title, Paragraph, Text } = Typography;
-const TabPane = Tabs.TabPane;
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
 
 message.config({
     top: 96,
@@ -38,7 +33,7 @@ class NewInvForm extends React.Component {
         form.setFieldsValue({
             keys: keys.filter(key => key !== k),
         });
-    }
+    };
 
     add = () => {
         const { form } = this.props;
@@ -50,14 +45,14 @@ class NewInvForm extends React.Component {
         form.setFieldsValue({
             keys: nextKeys,
         });
-    }
+    };
 
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 // console.log('Received values of form: ', values);
-                const valid_options = values.options.filter(item=>item);
+                const valid_options = values.options.filter(item => item);
                 // console.log(valid_options);
                 // console.log(valid_options.length);
 
@@ -76,7 +71,7 @@ class NewInvForm extends React.Component {
                         itype: values.itype || 'others',
                         createrUid: parseInt(window.sessionStorage.getItem('uid')),
                         options: valid_options,
-                    }
+                    };
 
                     console.log(postData);
 
@@ -110,12 +105,7 @@ class NewInvForm extends React.Component {
                 }
             }
         });
-    }
-
-    handleConfirmBlur = (e) => {
-        const value = e.target.value;
-        this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-    }
+    };
 
     render() {
         const { getFieldDecorator, getFieldValue } = this.props.form;
@@ -128,12 +118,6 @@ class NewInvForm extends React.Component {
             wrapperCol: {
                 xs: { span: 24 },
                 sm: { span: 16 },
-            },
-        };
-        const formItemLayoutWithOutLabel = {
-            wrapperCol: {
-                xs: { span: 24, offset: 0 },
-                sm: { span: 20, offset: 4 },
             },
         };
 
@@ -185,7 +169,7 @@ class NewInvForm extends React.Component {
                     onBack={this.props.handleNewInvRedirect}
                     title="发起投票"
                     subTitle="创建你自己的投票"
-                    style={{background: 'transparent'}}
+                    style={{ background: 'transparent' }}
                 />
                 <Form.Item
                     label="投票类型"
@@ -283,25 +267,13 @@ class NewInvBar extends Component {
         this.setState({
             showAgreement: true,
         });
-    }
-
-    handleOk = () => {
-        this.setState({
-            showAgreement: false,
-        });
-    }
-
-    handleCancel = () => {
-        this.setState({
-            showAgreement: false,
-        });
-    }
+    };
 
     handleWaiting = () => {
         this.setState({
             waiting: !this.state.waiting,
         });
-    }
+    };
 
     render() {
         return (
@@ -324,7 +296,7 @@ class NewInvPage extends Component {
     }
     handleNewInvRedirect = () => {
         this.props.history.push('/'); // 这里应该跳转到新建的投票页面/inv/:iid
-    }
+    };
 
     render() {
         if (this.state.userType === 'visitor') {

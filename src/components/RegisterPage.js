@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import { Link, Route, BrowserRouter, Switch, withRouter } from 'react-router-dom';
-import { Layout, Form, Icon, Input, Checkbox, Typography, message, Tabs, Tooltip, Cascader, Select, Row, Col, Spin, Button, AutoComplete, Modal, PageHeader } from 'antd';
+import { Link, withRouter } from 'react-router-dom';
+import { Layout, Form, Icon, Input, Checkbox, Typography, message, Tooltip, Spin, Button, Modal, PageHeader } from 'antd';
 import './RegisterPage.css';
 import HeadBar from './HeadBar';
 import encodePassword from '../tools/encodePassword';
 
-const { Content, Sider } = Layout;
-const { Title, Paragraph, Text } = Typography;
-const TabPane = Tabs.TabPane;
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
+const { Content } = Layout;
+const { Paragraph, Text } = Typography;
 
 message.config({
     top: 96,
@@ -41,7 +38,7 @@ class RegistrationForm extends React.Component {
                         email: values.email,
                         password: encodePassword(values.password),
                         nickname: values.nickname,
-                    }
+                    };
 
                     fetch('http://localhost:3001/api/register', {
                         method: 'POST',
@@ -77,16 +74,14 @@ class RegistrationForm extends React.Component {
                         this.props.handleWaiting();
                     });
                 }
-
-
             }
         });
-    }
+    };
 
     handleConfirmBlur = (e) => {
         const value = e.target.value;
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-    }
+    };
 
     compareToFirstPassword = (rule, value, callback) => {
         const form = this.props.form;
@@ -95,7 +90,7 @@ class RegistrationForm extends React.Component {
         } else {
             callback();
         }
-    }
+    };
 
     validateToNextPassword = (rule, value, callback) => {
         const form = this.props.form;
@@ -103,7 +98,7 @@ class RegistrationForm extends React.Component {
             form.validateFields(['confirm'], { force: true });
         }
         callback();
-    }
+    };
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -241,25 +236,25 @@ class RegisterBar extends Component {
         this.setState({
             showAgreement: true,
         });
-    }
+    };
 
     handleOk = () => {
         this.setState({
             showAgreement: false,
         });
-    }
+    };
 
     handleCancel = () => {
         this.setState({
             showAgreement: false,
         });
-    }
+    };
 
     handleWaiting = () => {
         this.setState({
             waiting: !this.state.waiting,
         });
-    }
+    };
 
     render() {
         return (
@@ -291,8 +286,7 @@ class RegisterBar extends Component {
 class RegisterPage extends Component {
     handleRegisterRedirect = () => {
         this.props.history.push('/login');
-    }
-
+    };
 
     render() {
         return (

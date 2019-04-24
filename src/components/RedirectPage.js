@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout} from 'antd';
+import { Layout } from 'antd';
 import HeadBar from './HeadBar';
 
 class RedirectPage extends Component {

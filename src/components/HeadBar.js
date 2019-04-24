@@ -9,7 +9,6 @@ const { Header } = Layout;
 const Search = Input.Search;
 
 
-
 class HeadBar extends Component {
   constructor() {
     super();
@@ -26,7 +25,7 @@ class HeadBar extends Component {
       nickname: null,
       userType: 'visitor',
     });
-  }
+  };
 
   handleSearch = async (pattern) => {
     if (!pattern) {
@@ -35,7 +34,7 @@ class HeadBar extends Component {
       await this.props.history.push('/');
       await this.props.history.push(`/search/${pattern}`);
     }
-  }
+  };
 
   render() {
     const { userType, nickname } = this.state;

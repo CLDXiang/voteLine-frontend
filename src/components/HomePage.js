@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Link, Route, BrowserRouter, Switch } from 'react-router-dom';
-import { Layout, Input, Menu, Icon, Typography, Tabs, Button } from 'antd';
+import { Link } from 'react-router-dom';
+import { Layout, Menu, Icon, Typography, Tabs } from 'antd';
 import './HomePage.css';
 import HeadBar from './HeadBar';
 import VoteList from './VoteList';

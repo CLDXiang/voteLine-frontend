@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Route, BrowserRouter, Switch } from 'react-router-dom';
-import { Button } from 'antd';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
@@ -9,8 +8,6 @@ import InvPage from './components/InvPage';
 import SearchPage from './components/SearchPage';
 import RedirectPage from './components/RedirectPage';
 import './App.css';
-
-
 
 class App extends Component {
   render() {

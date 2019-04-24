@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
-import { Link, Route, BrowserRouter, withRouter } from 'react-router-dom';
-import { Layout, Form, Icon, Input, Switch, Avatar, Radio, Checkbox, Typography, message, Tabs, Tooltip, DatePicker, Cascader, Select, Row, Col, Spin, Button, AutoComplete, Modal, PageHeader } from 'antd';
+import { withRouter } from 'react-router-dom';
+import { Layout, Form, Icon, Avatar, Radio, Checkbox, Typography, message, Row, Col, Button } from 'antd';
 import createG2 from 'g2-react';
-import { Stat } from 'g2';
 import moment from 'moment';
 import './InvPage.css';
 import HeadBar from './HeadBar';
-import encodePassword from '../tools/encodePassword';
 
-const { Content, Sider } = Layout;
-const { TextArea } = Input;
+const { Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
-const TabPane = Tabs.TabPane;
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
 
 message.config({
     top: 96,
@@ -61,7 +55,7 @@ class InvForm extends React.Component {
         }).catch(() => {
             console.log('error!');
         });
-    }
+    };
 
 
     handleSubmit = (e) => {
@@ -103,7 +97,7 @@ class InvForm extends React.Component {
                     uid: parseInt(uid),
                     ip: ip,
                     region: region || '',
-                }
+                };
 
                 console.log(postData);
 
@@ -135,23 +129,12 @@ class InvForm extends React.Component {
 
             }
         });
-    }
-
-    handleConfirmBlur = (e) => {
-        const value = e.target.value;
-        this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-    }
+    };
 
     render() {
-        const { getFieldDecorator, getFieldValue } = this.props.form;
+        const { getFieldDecorator } = this.props.form;
         const voted = (this.state.data && this.state.data.voted) || false;
         const votedOptions = (this.state.data && this.state.data.votedOptions) || [];
-
-        const radioStyle = {
-            display: 'block',
-            height: '30px',
-            lineHeight: '30px',
-        };
 
         return (
             <Form onSubmit={this.handleSubmit} className="inv-form" >
@@ -168,13 +151,13 @@ class InvForm extends React.Component {
                         </Button.Group>
                     </Title>
                     <Paragraph>
-                        <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf', marginRight: "10px" }}>{this.state.data && this.state.data.createrName.substring(0, 1)}</Avatar> 
+                        <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf', marginRight: "10px" }}>{this.state.data && this.state.data.createrName.substring(0, 1)}</Avatar>
                         <Text>{this.state.data && this.state.data.createrName} 创建于 {this.state.data && moment(this.state.data.inv.createdAt).format('YYYY-MM-DD HH:mm:ss')}</Text>
                     </Paragraph>
                     <Paragraph className="paragraph">
                         {(this.state.data && this.state.data.inv.description) || ''}
                     </Paragraph>
-                    
+
                 </Typography>
                 {(this.state.data && this.state.data.inv.multiple === true) ?
                     <Form.Item
@@ -282,7 +265,7 @@ class ResultsBar extends Component {
         }).catch(() => {
             console.log('error!');
         });
-    }
+    };
 
     render() {
         const Chart = createG2(chart => {
@@ -325,7 +308,7 @@ class ResultsBar extends Component {
                         </Button.Group>
                     </Title>
                     <Paragraph>
-                        <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf', marginRight: "10px" }}>{this.state.data && this.state.data.createrName.substring(0, 1)}</Avatar> 
+                        <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf', marginRight: "10px" }}>{this.state.data && this.state.data.createrName.substring(0, 1)}</Avatar>
                         <Text>{this.state.data && this.state.data.createrName} 创建于 {this.state.data && moment(this.state.data.inv.createdAt).format('YYYY-MM-DD HH:mm:ss')}</Text>
                     </Paragraph>
                     <Paragraph className="paragraph">
@@ -361,7 +344,7 @@ class InvBar extends Component {
         this.setState({
             showResults: !this.state.showResults,
         });
-    }
+    };
 
 
     render() {
@@ -371,7 +354,7 @@ class InvBar extends Component {
             userType: this.props.userType,
             handleInvRedirect: this.props.handleInvRedirect,
             handleGoLogin: this.props.handleGoLogin,
-        }
+        };
 
         return (
             <Content className="InvContent" >
@@ -392,11 +375,11 @@ class InvPage extends Component {
     }
     handleInvRedirect = () => {
         this.props.history.push('/');
-    }
+    };
 
     handleGoLogin = () => {
         this.props.history.push('/login');
-    }
+    };
 
     render() {
         const iid = this.props.match.params.iid;

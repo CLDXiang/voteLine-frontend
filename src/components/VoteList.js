@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { List, Avatar, Button, Skeleton, BackTop, Spin, message, Icon, Popconfirm } from 'antd';
+import { List, Skeleton, Spin, message, Icon, Popconfirm } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import './VoteList.css';
@@ -38,7 +38,7 @@ class VoteList extends Component {
             itype: this.props.itype,
             "pattern": "",
             "orderBy": "new",
-        }
+        };
 
         console.log(postData);
 
@@ -69,7 +69,7 @@ class VoteList extends Component {
         }).catch(() => {
             console.log('error!');
         });
-    }
+    };
 
     handleInfiniteOnLoad = () => {
         let data = this.state.data;
@@ -90,7 +90,7 @@ class VoteList extends Component {
                 loading: false,
             });
         });
-    }
+    };
 
     handleDelete = (item) => {
         // 验证用户身份
@@ -105,7 +105,7 @@ class VoteList extends Component {
 
         const postData = {
             iid: item.iid,
-        }
+        };
 
         console.log(postData);
 
@@ -139,7 +139,7 @@ class VoteList extends Component {
         }).catch(() => {
             console.log('error!');
         });
-    }
+    };
 
 
 

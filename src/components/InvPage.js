@@ -5,7 +5,10 @@ import createG2 from 'g2-react';
 import moment from 'moment';
 import './InvPage.css';
 import HeadBar from './HeadBar';
+import { config } from '../config';
 
+const { url_back, port_back } = config;
+const url_server = `${url_back}:${port_back}`;
 const { Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
 
@@ -35,7 +38,7 @@ class InvForm extends React.Component {
 
     fetchData = (callback) => {
         // 从后端获取该投票数据
-        fetch(`http://localhost:3001/api/getinv?iid=${this.props.iid}&uid=${window.sessionStorage.uid}`, {
+        fetch(`${url_server}/api/getinv?iid=${this.props.iid}&uid=${window.sessionStorage.uid}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -102,7 +105,7 @@ class InvForm extends React.Component {
                 console.log(postData);
 
 
-                fetch('http://localhost:3001/api/vote', {
+                fetch(`${url_server}/api/vote`, {
                     method: 'POST',
                     body: JSON.stringify(postData),
                     headers: {
@@ -245,7 +248,7 @@ class ResultsBar extends Component {
 
     fetchData = (callback) => {
         // 从后端获取该投票数据
-        fetch(`http://localhost:3001/api/getinv?iid=${this.props.iid}&uid=${window.sessionStorage.uid}`, {
+        fetch(`${url_server}/api/getinv?iid=${this.props.iid}&uid=${window.sessionStorage.uid}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

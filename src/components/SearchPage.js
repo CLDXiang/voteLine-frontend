@@ -4,7 +4,10 @@ import { Layout, Icon, Typography, message, Spin, List, Skeleton } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import './SearchPage.css';
 import HeadBar from './HeadBar';
+import { config } from '../config';
 
+const { url_back, port_back } = config;
+const url_server = `${url_back}:${port_back}`;
 const { Content } = Layout;
 const { Title } = Typography;
 
@@ -44,7 +47,7 @@ class ResultsBar extends Component {
 
         console.log(postData);
 
-        fetch('http://localhost:3001/api/getinvlist', {
+        fetch(`${url_server}/api/getinvlist`, {
             method: 'POST',
             body: JSON.stringify(postData),
             headers: {

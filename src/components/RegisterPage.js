@@ -4,7 +4,10 @@ import { Layout, Form, Icon, Input, Checkbox, Typography, message, Tooltip, Spin
 import './RegisterPage.css';
 import HeadBar from './HeadBar';
 import encodePassword from '../tools/encodePassword';
+import { config } from '../config';
 
+const { url_back, port_back } = config;
+const url_server = `${url_back}:${port_back}`;
 const { Content } = Layout;
 const { Paragraph, Text } = Typography;
 
@@ -40,7 +43,7 @@ class RegistrationForm extends React.Component {
                         nickname: values.nickname,
                     };
 
-                    fetch('http://localhost:3001/api/register', {
+                    fetch(`${url_server}/api/register`, {
                         method: 'POST',
                         body: JSON.stringify(postData),
                         headers: {

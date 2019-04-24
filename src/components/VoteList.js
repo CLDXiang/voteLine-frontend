@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { List, Skeleton, Spin, message, Icon, Popconfirm } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
-
 import './VoteList.css';
+import { config } from '../config';
+
+const { url_back, port_back } = config;
+const url_server = `${url_back}:${port_back}`;
 
 message.config({
     top: 96,
@@ -42,7 +45,7 @@ class VoteList extends Component {
 
         console.log(postData);
 
-        fetch('http://localhost:3001/api/getinvlist', {
+        fetch(`${url_server}/api/getinvlist`, {
             method: 'POST',
             body: JSON.stringify(postData),
             headers: {
@@ -109,7 +112,7 @@ class VoteList extends Component {
 
         console.log(postData);
 
-        fetch('http://localhost:3001/api/deleteinv', {
+        fetch(`${url_server}/api/deleteinv`, {
             method: 'POST',
             body: JSON.stringify(postData),
             headers: {

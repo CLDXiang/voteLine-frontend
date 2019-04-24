@@ -3,7 +3,10 @@ import { withRouter } from 'react-router-dom';
 import { Layout, Form, Icon, Input, Switch, Radio, message, DatePicker, Spin, Button, PageHeader } from 'antd';
 import './NewInvPage.css';
 import HeadBar from './HeadBar';
+import { config } from '../config';
 
+const { url_back, port_back } = config;
+const url_server = `${url_back}:${port_back}`;
 const { Content } = Layout;
 const { TextArea } = Input;
 
@@ -75,7 +78,7 @@ class NewInvForm extends React.Component {
 
                     console.log(postData);
 
-                    fetch('http://localhost:3001/api/newinv', {
+                    fetch(`${url_server}/api/newinv`, {
                         method: 'POST',
                         body: JSON.stringify(postData),
                         headers: {

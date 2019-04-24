@@ -4,6 +4,10 @@ import { Layout, Form, Icon, Input, Button, Checkbox, message, Spin, PageHeader 
 import './LoginPage.css';
 import HeadBar from './HeadBar';
 import encodePassword from '../tools/encodePassword';
+import { config } from '../config';
+
+const { url_back, port_back } = config;
+const url_server = `${url_back}:${port_back}`;
 
 const { Content } = Layout;
 
@@ -30,7 +34,7 @@ class NormalLoginForm extends React.Component {
           password: encodePassword(values.password),
         }
 
-        fetch('http://localhost:3001/api/login', {
+        fetch(`${url_server}/api/login`, {
           method: 'POST',
           body: JSON.stringify(postData),
           headers: {

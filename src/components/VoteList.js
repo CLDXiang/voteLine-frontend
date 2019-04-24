@@ -92,11 +92,15 @@ class VoteList extends Component {
         });
     }
 
+    handleDelete = (item) => {
+
+    }
+
 
 
     render() {
         const IconText = ({ type, text }) => (
-            <span>
+            <span >
                 <Icon type={type} style={{ marginRight: 8 }} />
                 {text}
             </span>
@@ -114,7 +118,7 @@ class VoteList extends Component {
                         dataSource={this.state.data}
                         itemLayout="vertical"
                         renderItem={item => (
-                            <List.Item actions={[<IconText type="star-o" text="收藏" />, <IconText type="like-o" text="喜欢" />, <IconText type="message" text="评论" />, <div><Icon type="fire" theme="twoTone" twoToneColor="orange" /> 投票人数：{item.votercount}</div>]}>
+                            <List.Item actions={[<IconText type="star-o" text="收藏" />, <IconText type="like-o" text="喜欢" />, <IconText type="message" text="评论" />, <IconText type="delete" text="删除"/>, <div><Icon type="fire" theme="twoTone" twoToneColor="orange" /> 投票人数：{item.votercount}</div>]}>
                                 <Skeleton avatar title={false} loading={item.loading} active>
                                     <List.Item.Meta
                                         title={<Link to={`/inv/${item.iid}`}>{item.title}</Link>}

@@ -254,7 +254,7 @@ class ResultsBar extends Component {
                 chartData: chartData,
                 height: res.options.length * 50,
                 plotCfg: {
-                    margin: [0, 30, 0, 18 * (maxLength + 1)]
+                    margin: [0, 30, 0, 17 * (maxLength + 4)]
                 },
             });
         });

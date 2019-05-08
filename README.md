@@ -48,6 +48,10 @@ yarn build
 
 并将生成的文件部署在服务器。
 
+## 设计文档
+
+参见[documents.md](https://github.com/CLDXiang/voteLine-frontend/blob/master/document.md)
+
 ## 外部资源
 
 页面背景图片来自[Pixiv](https://www.pixiv.net/member_illust.php?mode=medium&illust_id=62288977)。

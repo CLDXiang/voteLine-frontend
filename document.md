@@ -1,4 +1,4 @@
-# 数据库引论 课程项目1 - voteLine投票应用
+# 数据库引论 课程项目 - voteLine投票应用
 
 项目源码及README已上传至Github：
 
@@ -92,7 +92,7 @@
 
 ### <font color=#17A589>1.5 数据交互概要图示：</font>
 
-![dataFlow](./dataFlow.png)
+![dataFlow](./document_images/dataFlow.png)
 
 ## <font color=#2E86C1>2. 数据库设计</font>
 
@@ -153,7 +153,7 @@
 
 ### <font color=#17A589>2.2 ER图</font>
 
-![ER](ER.png)
+![ER](./document_images/ER.png)
 
 ## <font color=#2E86C1>3. 使用场景及实现细节</font>
 
@@ -167,7 +167,7 @@ voteLine是一个Web投票应用，用户可以发起自己的投票，也可以
 
 前端不是这门课程的核心，所以仅简单介绍一下界面。
 
-![homepage](./voteLine_homepage.jpg)
+![homepage](./document_images/voteLine_homepage.jpg)
 
 首页的UI设计见上图，搜索结果页面类似首页的右侧展示区，投票结果页面主体是可视化的数据图，其他页面的主体基本是表单。
 
@@ -225,7 +225,7 @@ voteLine是一个Web投票应用，用户可以发起自己的投票，也可以
 
 #### 3.1.4 投票结果页效果图
 
-![voteResults](./voteResults.jpg)
+![voteResults](./document_images/voteResults.jpg)
 
 ### <font color=#17A589>3.2 注册</font>
 
